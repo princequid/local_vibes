@@ -36,6 +36,100 @@
     <section class="px-6 lg:px-12 py-16">
       <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl md:text-5xl font-serif text-center mb-4 reveal">Our <span class="text-gradient">Menu</span></h1>
+
+        <div class="menu-book-stage reveal" aria-label="Interactive flipbook menu section">
+          <div class="menu-book-shell" aria-hidden="true"></div>
+          <div id="menu-book" class="menu-book" role="region" aria-label="Restaurant menu flipbook" tabindex="0" aria-live="polite">
+            <!-- Cover page -->
+            <div class="page" data-page-title="Cover" aria-label="Cover page">
+              <div class="page-face page-front page-cover-front">
+                <div class="cover-content">
+                  <p class="cover-subtitle">Local Vibes Restaurant</p>
+                  <h2 class="cover-title">Fine Dining Selection</h2>
+                  <p class="cover-copy">An elegant culinary journey inspired by local ingredients.</p>
+                </div>
+              </div>
+              <div class="page-face page-back page-cover-back" aria-hidden="true">
+                <h3 class="page-title">Chef’s Signature</h3>
+                <ul class="menu-list" aria-label="Chef signature dishes">
+                  <li class="menu-line"><div><p class="dish-name">Amuse-Bouche Trio</p><p class="dish-desc">Seasonal bites selected nightly</p></div><span class="dish-price">GHS 22</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Caviar Blini</p><p class="dish-desc">Crème fraîche, chive, lemon zest</p></div><span class="dish-price">GHS 68</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Oyster Selection</p><p class="dish-desc">Mignonette, citrus granita</p></div><span class="dish-price">GHS 48</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Starters -->
+            <div class="page" data-page-title="Starters" aria-label="Starters page">
+              <div class="page-face page-front">
+                <h3 class="page-title">Starters</h3>
+                <ul class="menu-list" aria-label="Starter dishes">
+                  <li class="menu-line"><div><p class="dish-name">Seared Scallops</p><p class="dish-desc">Cauliflower purée, citrus beurre blanc</p></div><span class="dish-price">GHS 42</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Heirloom Tomato Tartare</p><p class="dish-desc">Basil oil, feta snow, sourdough crisps</p></div><span class="dish-price">GHS 30</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Smoked Pumpkin Velouté</p><p class="dish-desc">Toasted seeds, truffle foam</p></div><span class="dish-price">GHS 26</span></li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=640&q=80" class="dish-image" alt="Elegant starter plating" loading="lazy">
+              </div>
+              <div class="page-face page-back" aria-hidden="true">
+                <h3 class="page-title">Starters II</h3>
+                <ul class="menu-list" aria-label="Additional starter dishes">
+                  <li class="menu-line"><div><p class="dish-name">Burrata & Citrus</p><p class="dish-desc">Blood orange, pistachio crumb</p></div><span class="dish-price">GHS 34</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Beet Carpaccio</p><p class="dish-desc">Goat cheese mousse, walnut oil</p></div><span class="dish-price">GHS 29</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Lobster Bisque</p><p class="dish-desc">Tarragon cream, brioche shard</p></div><span class="dish-price">GHS 38</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Main Course -->
+            <div class="page" data-page-title="Main Course" aria-label="Main course page">
+              <div class="page-face page-front">
+                <h3 class="page-title">Main Course</h3>
+                <ul class="menu-list" aria-label="Main course dishes">
+                  <li class="menu-line"><div><p class="dish-name">Herb-Crusted Sea Bass</p><p class="dish-desc">Saffron risotto, fennel emulsion</p></div><span class="dish-price">GHS 64</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Braised Short Rib</p><p class="dish-desc">Potato fondant, shallot jus</p></div><span class="dish-price">GHS 72</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Wild Mushroom Tagliatelle</p><p class="dish-desc">Aged parmesan, thyme butter</p></div><span class="dish-price">GHS 54</span></li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=640&q=80" class="dish-image" alt="Premium main course plate" loading="lazy">
+              </div>
+              <div class="page-face page-back" aria-hidden="true">
+                <h3 class="page-title">Main Course II</h3>
+                <ul class="menu-list" aria-label="Additional main course dishes">
+                  <li class="menu-line"><div><p class="dish-name">Lamb Rack Provençal</p><p class="dish-desc">Olive jus, dauphinoise potato</p></div><span class="dish-price">GHS 76</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Truffle Chicken Supreme</p><p class="dish-desc">Parsnip purée, pan jus</p></div><span class="dish-price">GHS 62</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Charred Cauliflower Steak</p><p class="dish-desc">Tahini glaze, quinoa herb salad</p></div><span class="dish-price">GHS 48</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Desserts -->
+            <div class="page" data-page-title="Desserts" aria-label="Desserts page">
+              <div class="page-face page-front">
+                <h3 class="page-title">Desserts</h3>
+                <ul class="menu-list" aria-label="Dessert dishes">
+                  <li class="menu-line"><div><p class="dish-name">Valrhona Chocolate Dome</p><p class="dish-desc">Salted caramel core, vanilla bean cream</p></div><span class="dish-price">GHS 32</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Lemon Verbena Pavlova</p><p class="dish-desc">Seasonal berries, citrus curd</p></div><span class="dish-price">GHS 28</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Classic Crème Brûlée</p><p class="dish-desc">Madagascar vanilla, burnt sugar crust</p></div><span class="dish-price">GHS 26</span></li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=640&q=80" class="dish-image" alt="Fine dining dessert" loading="lazy">
+              </div>
+              <div class="page-face page-back" aria-hidden="true">
+                <h3 class="page-title">Desserts & Drinks</h3>
+                <ul class="menu-list" aria-label="Dessert and after-dinner drinks">
+                  <li class="menu-line"><div><p class="dish-name">Pistachio Mille-Feuille</p><p class="dish-desc">Raspberry coulis, chantilly</p></div><span class="dish-price">GHS 30</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Affogato Royale</p><p class="dish-desc">Vanilla gelato, espresso shot</p></div><span class="dish-price">GHS 24</span></li>
+                  <li class="menu-line"><div><p class="dish-name">Digestif Flight</p><p class="dish-desc">Amaro, cognac, herbal liqueur</p></div><span class="dish-price">GHS 40</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="book-controls" role="group" aria-label="Flipbook navigation controls">
+            <button type="button" id="menu-prev" class="book-btn" aria-label="Go to previous page">Previous</button>
+            <span id="menu-page-indicator" class="book-indicator" aria-live="polite">Page 1 / 5</span>
+            <button type="button" id="menu-next" class="book-btn" aria-label="Go to next page">Next</button>
+          </div>
+        </div>
+
         <p class="text-white/70 text-center max-w-2xl mx-auto mb-12 reveal">Seasonal selections, locally sourced.</p>
 
         <div class="flex flex-wrap justify-center gap-2 mb-16 reveal" role="tablist" aria-label="Menu categories">
@@ -212,5 +306,6 @@
   <script src="assets/js/animations.js"></script>
   <script src="assets/js/tilt.js"></script>
   <script src="assets/js/menu-filter.js"></script>
+  <script src="assets/js/menu-flipbook.js"></script>
 </body>
 </html>

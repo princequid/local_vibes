@@ -322,3 +322,320 @@ body {
   line-height: 1.5;
   display: block;
 }
+
+/* 3D Flipbook menu (added section on menu page) */
+.menu-book-stage {
+  margin: 1rem auto 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-book-shell {
+  width: min(920px, 94vw);
+  height: 8px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0) 72%);
+}
+
+.menu-book {
+  position: relative;
+  width: min(640px, 92vw);
+  height: min(860px, 82vh);
+  perspective: 2200px;
+  transform-style: preserve-3d;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.menu-book::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(to right, rgba(56, 42, 25, 0.36), rgba(56, 42, 25, 0.06) 3%, transparent 8%, transparent 92%, rgba(56, 42, 25, 0.06) 97%, rgba(56, 42, 25, 0.28)),
+    linear-gradient(140deg, #f8f2de 0%, #efe4c6 100%);
+  box-shadow: inset 0 0 0 1px rgba(108, 85, 55, 0.22), 0 16px 36px rgba(0, 0, 0, 0.36);
+}
+
+.menu-book::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.7rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(0);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.2));
+  transition: opacity 0.35s ease, transform 0.8s ease;
+}
+
+.menu-book.is-flipping::after {
+  opacity: 0.55;
+}
+
+.menu-book.is-flipping.flip-next::after {
+  transform: translateX(2.2%);
+}
+
+.menu-book.is-flipping.flip-prev::after {
+  transform: translateX(-2.2%);
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.page-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0.55rem 0.55rem 0;
+  padding: clamp(1rem, 2vw, 1.7rem);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: linear-gradient(140deg, #f8f2de 0%, #efe4c6 100%);
+  color: #2b241a;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(108, 85, 55, 0.2);
+}
+
+.page-front::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.18), transparent);
+  pointer-events: none;
+}
+
+.page.flipped .page-face {
+  border-radius: 0.55rem 0 0 0.55rem;
+}
+
+.page-front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.04));
+  transition: width 0.5s ease, opacity 0.5s ease;
+}
+
+.menu-book:not(.is-flipping) .page:hover .page-front::before {
+  width: 24px;
+  opacity: 0.28;
+}
+
+.page.turning .page-front::before,
+.page.curling .page-front::before {
+  width: 42px;
+  opacity: 0.46;
+}
+
+.page.turning .page-face {
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42), inset 0 0 0 1px rgba(108, 85, 55, 0.2);
+}
+
+.page.turning .page-front::after {
+  width: 52px;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.27), transparent);
+}
+
+.page-back {
+  transform: rotateY(180deg);
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.page.flipped .page-front::after {
+  left: 0;
+  right: auto;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.14), transparent);
+}
+
+.page-cover-front {
+  background: linear-gradient(145deg, #1c1711 0%, #3a2c1f 50%, #8e6940 100%);
+  color: #f6ecd8;
+}
+
+.page-cover-back {
+  background: linear-gradient(145deg, #f5ead2 0%, #eee0c0 100%);
+}
+
+.cover-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.95rem;
+}
+
+.cover-subtitle {
+  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.cover-title,
+.page-title,
+.dish-name {
+  font-family: 'Times New Roman', Georgia, serif;
+}
+
+.cover-title {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  letter-spacing: 0.04em;
+}
+
+.cover-copy,
+.inside-note,
+.dish-desc,
+.dish-price {
+  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+}
+
+.cover-copy,
+.inside-note {
+  max-width: 25ch;
+  line-height: 1.6;
+  font-size: 0.96rem;
+}
+
+.page-title {
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  margin-bottom: 1rem;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.menu-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(76, 58, 33, 0.2);
+}
+
+.dish-name {
+  margin: 0;
+  font-size: 1.06rem;
+}
+
+.dish-desc {
+  margin: 0.18rem 0 0;
+  line-height: 1.5;
+  font-size: 0.92rem;
+  color: #4b3f31;
+}
+
+.dish-price {
+  font-weight: 700;
+  color: #5c4528;
+  letter-spacing: 0.03em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.dish-image {
+  width: 100%;
+  margin-top: 1rem;
+  height: clamp(108px, 16vh, 145px);
+  object-fit: cover;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(102, 79, 49, 0.2);
+}
+
+.book-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.book-btn {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #f8f3e5;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.56rem 1.2rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.book-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.book-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.book-indicator {
+  min-width: 7.5rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 767px) {
+  .menu-book {
+    width: min(520px, 96vw);
+    height: min(760px, 78vh);
+  }
+
+  .page-face {
+    padding: 1rem;
+  }
+
+  .dish-image {
+    height: clamp(84px, 14vh, 112px);
+  }
+
+  .menu-line {
+    gap: 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-book::after,
+  .page-front::before,
+  .page-front::after,
+  .page-face {
+    transition: none;
+  }
+
+  .page {
+    transition: transform 0.01ms linear;
+  }
+}
