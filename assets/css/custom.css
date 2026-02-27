@@ -1,0 +1,324 @@
+/* Local Vibes Restaurant - Custom Styles */
+/* Animated gradients, glassmorphism, keyframes */
+
+:root {
+  --gradient-sunset: linear-gradient(135deg, #f97316 0%, #7c3aed 100%);
+  --gradient-gold: linear-gradient(135deg, #eab308 0%, #991b1b 100%);
+  --gradient-teal: linear-gradient(135deg, #0d9488 0%, #1e3a8a 100%);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+}
+
+.dark {
+  --glass-bg: rgba(0, 0, 0, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.bg-gradient-animated {
+  background: linear-gradient(-45deg, #f97316, #7c3aed, #0d9488, #1e3a8a);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.bg-gradient-sunset {
+  background: linear-gradient(135deg, #f97316 0%, #7c3aed 100%);
+}
+
+.bg-gradient-gold {
+  background: linear-gradient(135deg, #eab308 0%, #991b1b 100%);
+}
+
+.bg-gradient-teal {
+  background: linear-gradient(135deg, #0d9488 0%, #1e3a8a 100%);
+}
+
+/* Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-strong {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #f97316, #eab308, #7c3aed);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  height: 3px;
+  background: linear-gradient(90deg, #f97316, #7c3aed);
+  transform-origin: left;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+/* Page load overlay */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0f0a1a 0%, #1e1b4b 100%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loader-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-logo {
+  font-family: serif;
+  font-size: 2rem;
+  color: white;
+  letter-spacing: 0.2em;
+  opacity: 0;
+  animation: logoReveal 1.2s ease forwards 0.3s;
+}
+
+@keyframes logoReveal {
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Nav link underline */
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f97316, #7c3aed);
+  transition: width 0.3s ease;
+}
+
+.nav-link-underline:hover::after,
+.nav-link-underline.active::after {
+  width: 100%;
+}
+
+/* Card 3D tilt container */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tilt-card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Gradient border */
+.gradient-border {
+  position: relative;
+  background: var(--glass-bg);
+  border-radius: 1rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #f97316, #7c3aed, #0d9488);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+}
+
+/* Reserve Now floating button */
+.btn-reserve-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  box-shadow: 0 10px 40px rgba(249, 115, 22, 0.4);
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Dark mode transition */
+body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Parallax layer */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.lightbox-overlay.active .lightbox-img {
+  transform: scale(1);
+}
+
+/* Scroll reveal base */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Input focus glow */
+.input-glow:focus {
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3);
+}
+
+/* Menu page: card layout — image top, text bottom, larger cards */
+.menu-card-inner-layout {
+  flex-direction: column;
+}
+
+.menu-card-image-wrap {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+  min-height: 0;
+}
+
+/* Menu card: dedicated image section (top) and separate description section (bottom) */
+.menu-card-image-section,
+.menu-card-description-section {
+  display: block;
+}
+
+.menu-card-image-area {
+  border-radius: 1rem 1rem 0 0;
+  margin: -0.5rem -0.5rem 0 -0.5rem;
+  width: calc(100% + 1rem) !important;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.menu-card-text-area {
+  border-radius: 0 0 1rem 1rem;
+  margin-top: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Ensure dish description text is always visible and not clipped */
+.menu-card-text-block {
+  flex-shrink: 0;
+  overflow: visible;
+  min-height: min-content;
+}
+
+/* Description copy inside the text area */
+.menu-card-dish-description {
+  line-height: 1.5;
+  display: block;
+}
