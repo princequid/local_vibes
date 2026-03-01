@@ -50,7 +50,10 @@
           <div class="reveal-left">
             <div class="glass-strong rounded-2xl p-8 gradient-border">
               <h2 class="text-xl font-serif mb-6">Contact form</h2>
-              <form id="contact-form" class="space-y-5" novalidate>
+              <div id="contact-form-notice" class="hidden mb-5 rounded-xl border px-4 py-3 text-sm" role="status" aria-live="polite"></div>
+              <form id="contact-form" class="space-y-5" novalidate data-receiver-email="princequarm27@gmail.com">
+                <input type="hidden" name="_subject" value="New Contact Message - Local Vibes Restaurant">
+                <input type="hidden" name="_captcha" value="false">
                 <div>
                   <label for="contact-name" class="block text-sm font-medium text-white/90 mb-2">Name</label>
                   <input type="text" id="contact-name" name="name" required autocomplete="name" class="input-glow w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:border-orange-500/50 transition outline-none" placeholder="Your name">
