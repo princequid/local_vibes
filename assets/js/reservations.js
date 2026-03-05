@@ -51,6 +51,17 @@
     submitButton.textContent = isSubmitting ? 'Submitting...' : 'Confirm reservation';
   }
 
+  function setHiddenField(name, value) {
+    var hidden = form.querySelector('input[type="hidden"][name="' + name + '"]');
+    if (!hidden) {
+      hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = name;
+      form.appendChild(hidden);
+    }
+    hidden.value = String(value);
+  }
+
   function showSuccessState() {
     formWrap.classList.add('opacity-0');
     setTimeout(function () {
@@ -74,39 +85,95 @@
     if (emailInput) {
       var customerEmail = emailInput.value.trim();
       payload.set('_replyto', customerEmail);
-      payload.set('_cc', customerEmail);
     }
-    payload.set('_subject', 'New Reservation Request - Local Vibes Restaurant');
-    payload.set('_captcha', 'false');
+    payload.set('_subject', '🗓️ New Reservation – ' + (nameInput ? nameInput.value.trim() : '') + ' – ' + (dateInput ? dateInput.value : '') + ' at ' + (timeInput ? timeInput.value : ''));
+    payload.set('_captcha', 'true');
     payload.set('_template', 'table');
+    var configuredNextUrl = (form.getAttribute('data-next-url') || '').trim();
+    var nextUrl = configuredNextUrl;
+    if (!nextUrl) {
+      var successUrl = new URL(window.location.href);
+      successUrl.searchParams.set('reservation', 'success');
+      nextUrl = successUrl.toString();
+    }
+    payload.set('_next', nextUrl);
+
+    var submittedOn = new Date().toLocaleString();
+    var specialRequests = String(payload.get('notes') || '').trim() || 'None';
+    var fullName = nameInput ? nameInput.value.trim() : '';
+    var firstName = fullName ? fullName.split(/\s+/)[0] : 'Guest';
+    var restaurantName = (form.getAttribute('data-restaurant-name') || 'Local Vibes').trim();
+    var restaurantPhone = (form.getAttribute('data-restaurant-phone') || '').trim();
+    var restaurantEmail = (form.getAttribute('data-restaurant-email') || form.getAttribute('data-receiver-email') || '').trim();
+    var restaurantAddress = (form.getAttribute('data-restaurant-address') || '').trim();
+    var websiteUrl = (form.getAttribute('data-restaurant-website') || '').trim();
+    var hasPublicWebsite = /^https?:\/\//i.test(websiteUrl) && !/localhost|127\.0\.0\.1/i.test(websiteUrl);
 
     var reservationSummary = [
-      'Name: ' + (nameInput ? nameInput.value.trim() : ''),
-      'Email: ' + (emailInput ? emailInput.value.trim() : ''),
-      'Phone: ' + (phoneInput ? phoneInput.value.trim() : ''),
+      'New Reservation Received',
+      '',
+      'You have received a new table reservation request.',
+      '',
+      '📌 Reservation Details',
+      '',
+      'Full Name: ' + (nameInput ? nameInput.value.trim() : ''),
+      'Email Address: ' + (emailInput ? emailInput.value.trim() : ''),
+      'Phone Number: ' + (phoneInput ? phoneInput.value.trim() : ''),
       'Date: ' + (dateInput ? dateInput.value : ''),
       'Time: ' + (timeInput ? timeInput.value : ''),
-      'Guests: ' + (guestsInput ? guestsInput.value : '')
-    ].join('\n');
-
-    payload.set('message', reservationSummary + '\n\nNotes: ' + (payload.get('notes') || 'None'));
-    return payload;
-  }
-
-  function openMailFallback(receiverEmail, payload) {
-    var subject = payload.get('_subject') || 'New Reservation Request';
-    var body = [
-      payload.get('message') || '',
+      'Number of Guests: ' + (guestsInput ? guestsInput.value : ''),
       '',
-      '---',
-      'This draft was opened because the direct reservation submission failed.'
+      'Special Requests:',
+      specialRequests,
+      '',
+      '⏱ Submitted On:',
+      '',
+      submittedOn,
+      '',
+      '⚠️ Please confirm or contact the guest as soon as possible.'
     ].join('\n');
 
-    var mailtoUrl = 'mailto:' + encodeURIComponent(receiverEmail)
-      + '?subject=' + encodeURIComponent(String(subject))
-      + '&body=' + encodeURIComponent(String(body));
+    var customerConfirmationLines = [
+      'Dear ' + firstName + ',',
+      '',
+      'Thank you for choosing ' + restaurantName + '.',
+      '',
+      'We have received your reservation request and will be happy to host you.',
+      '',
+      'Reservation Details:',
+      '',
+      '- Date: ' + (dateInput ? dateInput.value : ''),
+      '',
+      '- Time: ' + (timeInput ? timeInput.value : ''),
+      '',
+      '- Number of Guests: ' + (guestsInput ? guestsInput.value : ''),
+      '',
+      '- Special Requests: ' + specialRequests + '.',
+      '',
+      'If any of these details are incorrect, please contact us immediately.',
+      '',
+      restaurantPhone ? 'Phone: ' + restaurantPhone : null,
+      '',
+      restaurantEmail ? 'Email: ' + restaurantEmail : null,
+      '',
+      'We look forward to welcoming you and providing you with an exceptional dining experience.',
+      '',
+      'Warm regards,',
+      '',
+      restaurantName + ' Team',
+      '',
+      restaurantAddress || null,
+      '',
+      hasPublicWebsite ? websiteUrl : null
+    ];
 
-    window.location.href = mailtoUrl;
+    var customerConfirmation = customerConfirmationLines.filter(function (line) {
+      return line !== null;
+    }).join('\n');
+
+    //payload.set('message', reservationSummary);
+    payload.set('_autoresponse', customerConfirmation);
+    return payload;
   }
 
   function submitReservation() {
@@ -118,40 +185,18 @@
 
     clearSubmitError();
     setSubmitting(true);
-
-    var endpoint = 'https://formsubmit.co/ajax/' + encodeURIComponent(receiverEmail);
     var payload = buildPayload();
 
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { Accept: 'application/json' },
-      body: payload
-    })
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error('Submission failed');
-        }
-        return response.json();
-      })
-      .then(function (data) {
-        var ok = data && (data.success === 'true' || data.success === true);
-        if (!ok) {
-          var apiMessage = data && data.message ? String(data.message) : 'Unexpected response';
-          throw new Error(apiMessage);
-        }
-        showSuccessState();
-      })
-      .catch(function (error) {
-        openMailFallback(receiverEmail, payload);
-        var message = 'Direct submit failed. Your email app was opened with a prefilled reservation draft as backup.';
-        if (error && /web server/i.test(String(error.message))) {
-          message = 'Direct submit failed because this page is running as a local HTML file. Use a local web server (or your deployed site). Your email app was opened with a backup draft.';
-        }
-        setSubmitError(message);
-      })
-      .finally(function () {
-        setSubmitting(false);
-      });
+    ['_replyto', '_subject', '_captcha', '_template', '_next', 'message', '_autoresponse'].forEach(function (key) {
+      var value = payload.get(key);
+      if (value !== null && value !== undefined) {
+        setHiddenField(key, value);
+      }
+    });
+
+    form.method = 'POST';
+    form.action = 'https://formsubmit.co/' + encodeURIComponent(receiverEmail);
+    form.submit();
   }
 
   form.addEventListener('submit', function (e) {
@@ -171,6 +216,16 @@
       submitReservation();
     }
   });
+
+  if (window.location.search) {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('reservation') === 'success') {
+      showSuccessState();
+      params.delete('reservation');
+      var cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }
 
   if (anotherBtn) {
     anotherBtn.addEventListener('click', function () {

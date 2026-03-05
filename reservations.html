@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Reserve a table at Local Vibes Restaurant. Book online for an unforgettable dining experience.">
   <title>Reservations | Local Vibes Restaurant</title>
+
+  <!-- Google analytics tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JLDYBRKVS8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JLDYBRKVS8');
+</script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class', theme: { extend: {} } };</script>
   <link rel="stylesheet" href="assets/css/custom.css">
@@ -43,7 +54,7 @@
         <div id="reservation-form-wrap" class="glass-strong rounded-2xl p-8 md:p-10 gradient-border reveal transition-opacity duration-300">
           <form id="reservation-form" class="space-y-6" novalidate data-receiver-email="princequarm27@gmail.com">
             <input type="hidden" name="_subject" value="New Reservation Request - Local Vibes Restaurant">
-            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_captcha" value="true">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_autoresponse" value="Thank you for choosing Local Vibes Restaurant. We have received your reservation request and will confirm your booking shortly by email or phone.">
             <div>
